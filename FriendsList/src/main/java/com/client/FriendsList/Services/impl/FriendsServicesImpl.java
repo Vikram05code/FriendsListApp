@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FriendsServicesImpl implements FriendsServices {
@@ -46,16 +47,26 @@ public class FriendsServicesImpl implements FriendsServices {
 
     @Override
     public List<FriendsDto> getAllFriends() {
-        return null;
+
+        List<Friends> friends = friendsRepository.findAll();
+        List<FriendsDto> friendsDto = friends.stream().map(friend -> friendsToFriendsDto(friend)).collect(Collectors.toList());
+
+        return friendsDto;
     }
 
     @Override
     public FriendsDto getFriendsById(int friendsId) {
-        return null;
+
+        Friends friends = friendsRepository.findById(friendsId).orElseThrow(()->new ResourceNotFoundException("Friends", "friendsId", friendsId));
+        FriendsDto friendsDto = friendsToFriendsDto(friends);
+
+        return friendsDto;
     }
 
     @Override
     public void deleteFriendsById(int friendsId) {
+
+        friendsRepository.deleteById(friendsId);
 
     }
 
