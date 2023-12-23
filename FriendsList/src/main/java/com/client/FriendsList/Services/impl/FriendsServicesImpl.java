@@ -15,10 +15,11 @@ import java.util.stream.Collectors;
 @Service
 public class FriendsServicesImpl implements FriendsServices {
 
+
+    @Autowired
+    private ModelMapper modelMapper;
     @Autowired
     private FriendsRepository friendsRepository;
-
-    private ModelMapper modelMapper;
 
 
     @Override
